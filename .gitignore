@@ -1,0 +1,10 @@
+.DS_Store
+example.numbers
+example.xlsx
+output.pdf
+settings.json
+template.xlsx
+test.db
+handlers/handler.go
+service/service.go
+storage/storage.go
