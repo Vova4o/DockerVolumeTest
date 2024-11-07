@@ -1,29 +1,36 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"os"
-	"time"
+    "fmt"
+    "log"
+    "os"
+    "time"
 )
 
 func main() {
-    // open a file if it exists or create a new one
-    file, err := os.OpenFile("test.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+    // Убедитесь, что директория существует
+    if _, err := os.Stat("/app/data"); os.IsNotExist(err) {
+        os.MkdirAll("/app/data", 0755)
+    }
 
+    // Открываем файл, если он существует, или создаем новый
+    file, err := os.OpenFile("/app/data/test.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer file.Close()
+
+    // Получаем текущее время
+    currentTime := time.Now()
+
+    // Форматируем строку для записи
+    testString := fmt.Sprintf("Hello, World! %s\n", currentTime)
+
+    // Записываем строку в файл
+    _, err = file.WriteString(testString)
     if err != nil {
         log.Fatal(err)
     }
 
-    // time now
-    time := time.Now()
-
-    testString := fmt.Sprintf("Hello, World! %s\n", time)
-    // write to the file
-    _, err = file.WriteString(testString)
-    
-
-    // close the file
-    defer file.Close()
-
+    fmt.Println("Запись в файл выполнена успешно")
 }

@@ -2,14 +2,6 @@ services:
   app:
     build: .
     volumes:
-      - ./data:/app/data
+      - /Users/vladimirgavrilenko/GoProjects/test/data:/app/data
     ports:
       - "8080:8080"
-
-volumes:
-  data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /Users/vladimirgavrilenko/GoProjects/test/data
-      o: bind
